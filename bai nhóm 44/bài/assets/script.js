@@ -208,16 +208,15 @@ function displaySearchResults(songs) {
   if (songs.length === 0) {
     html += "<p>Không tìm thấy kết quả nào.</p>";
   } else {
-    // Tạo lưới hiển thị
-    html += '<div class="shelf-grid">';
+    // Tạo lưới hiển thị (dạng danh sách, không có hình ảnh)
+    html += '<div class="search-results-list">';
 
     // Lặp qua từng bài hát và tạo HTML
     songs.forEach((song) => {
       html += `
-        <div class="music-card" data-song-id="${song.baihat_id}">
-            <img src="${escapeHTML(song.hinh_anh)}" alt="">
-            <p class="card-title">${escapeHTML(song.ten_bai_hat)}</p>
-            <p class="card-artist">${escapeHTML(song.ca_si)}</p>
+        <div class="search-result-item" data-song-id="${song.baihat_id}">
+            <p class="result-title"><a class="result-link" href="song.php?id=${song.baihat_id}">${escapeHTML(song.ten_bai_hat)}</a></p>
+            <p class="result-artist">${escapeHTML(song.ca_si)}</p>
         </div>
       `;
     });
@@ -235,29 +234,14 @@ function displaySearchResults(songs) {
 
 // 6. Hàm thêm sự kiện click cho thẻ nhạc (tách ra từ setupMusicCards)
 function addClickListenersToNewCards() {
-  const newMusicCards = mainContent.querySelectorAll(".music-card");
-  const playerBar = document.querySelector(".player-bar"); // Lấy thanh nhạc
+  const newMusicCards = mainContent.querySelectorAll(".search-result-item");
 
   newMusicCards.forEach((card) => {
-    card.addEventListener("click", () => {
+    card.addEventListener("click", (e) => {
       const clickedSongId = card.getAttribute("data-song-id");
-
-      // Tìm bài hát trong 'playlist' (đã tải lúc đầu)
-      // Lưu ý: Cách này chỉ hoạt động nếu 'playlist' chứa TẤT CẢ bài hát
-      // Nếu không, chúng ta phải fetch riêng bài hát này. Tạm dùng cách đơn giản:
-      const newIndex = playlist.findIndex(
-        (song) => song.baihat_id == clickedSongId
-      );
-
-      if (newIndex !== -1) {
-        songIndex = newIndex;
-        loadSong(playlist[songIndex]);
-        playSong();
-        playerBar.classList.add("show"); // Hiện thanh nhạc
-      } else {
-        // Xử lý nếu bài hát không có trong playlist đã tải
-        // (Tạm thời bỏ qua để đơn giản)
-        console.warn("Bài hát không tìm thấy trong playlist đã tải.");
+      // Điều hướng toàn bộ thẻ tới trang chi tiết bài hát
+      if (clickedSongId) {
+        window.location.href = `song.php?id=${encodeURIComponent(clickedSongId)}`;
       }
     });
   });

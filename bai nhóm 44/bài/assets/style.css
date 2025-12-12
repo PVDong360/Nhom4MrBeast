@@ -300,3 +300,74 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
 }
+
+/* --- CSS CHO DANH SÁCH KẾT QUẢ TÌM KIẾM (KHÔNG CÓ HÌNH ẢNH) --- */
+.search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Kéo dài item sang hai bên bằng cách bù vào padding của `.content` (24px)
+   - Thay đổi này làm cho "thanh" kết quả rộng hơn, sát mép vùng nội dung.
+*/
+.search-result-item {
+  background-color: var(--color-hover);
+  /* Mở rộng chiều ngang: +48px để bù 24px padding hai bên của .content */
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.search-result-item:hover {
+  background-color: #4a4a4a;
+  border-left-color: var(--color-primary-text);
+}
+
+.search-result-item .result-title {
+  font-weight: 500;
+  color: var(--color-primary-text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result-item .result-artist {
+  color: var(--color-secondary-text);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-link, .result-link {
+  color: inherit;
+  text-decoration: none;
+}
+.card-link:hover, .result-link:hover {
+  text-decoration: underline;
+}
+
+.song-detail-title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+.song-detail-artist {
+  color: var(--color-secondary-text);
+  font-size: 1.1rem;
+}
+.song-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.song-detail-card {
+  text-align: center;
+}
