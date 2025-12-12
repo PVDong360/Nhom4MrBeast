@@ -85,6 +85,6 @@
     </div>
 
     <?php include 'templates/player.php'; ?>
-    <script src="assets/script.js" defer></script>
+    <script src="assets/script.js?v=<?php echo file_exists(__DIR__ . '/assets/script.js') ? filemtime(__DIR__ . '/assets/script.js') : time(); ?>" defer></script>
 </body>
 </html>
